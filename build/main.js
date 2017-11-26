@@ -16,38 +16,42 @@
   // client.get('http://marketplace.envato.com/api/edge/popular:themeforest.json', function(response) {
   //     console.log(response);
   // });
-  var component, http, req, url;
+  var httpGet, url;
 
-  http = require('http');
+  httpGet = function(aUrl, aCallback) {
+        var anHttpRequest = new XMLHttpRequest();
+        anHttpRequest.onreadystatechange = function() { 
+            if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+                aCallback(anHttpRequest.responseText);
+        }
 
-  component = 'frontend';
+        anHttpRequest.open( "GET", aUrl, true );            
+        anHttpRequest.send( null );
+    };
 
   url = "http://marketplace.envato.com/api/edge/popular:themeforest.json";
 
   console.log(url);
 
-  req = http.get(url, function(res) {
-    var status, value;
-    status = res.statusCode;
-    value = status === 200 ? 1 : 0;
-    if (status === 200) {
-      // ...
-      console.log("yey!");
-      return res.on('data', function(chunk) {
-        return console.log('body: ' + chunk);
-      });
-    } else {
-      // ...
-      return console.log("i'm not worthy");
-    }
+  httpGet(url, function(res) {
+    return console.log(res);
   });
 
-  req.on('error', function() {
-    var msg;
-    msg = "not available";
-    return console.log(msg);
-  });
+  // req = http.get url, (res) ->
+//   status = res.statusCode
+//   value = if status == 200 then 1 else 0
+//   if status == 200
+//     # ...
+//     console.log "yey!"
+//     res.on 'data', (chunk) ->
+//       console.log('body: ' + chunk)
+//   else
+//     # ...
+//     console.log "i'm not worthy"
 
-  console.log("done!");
+// req.on 'error', ->
+//   msg = "not available"
+//   console.log msg
+// console.log "done!"
 
 }).call(this);
