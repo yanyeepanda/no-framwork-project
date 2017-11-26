@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="main.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
   </head>
-  <body>
+  <body onload="fetchData()">
     <div class="top-bar">
       <div class="container">
         <img class="logo" src="../_assets/logo.png">
@@ -30,13 +30,13 @@
         <div class="grab-them">
             Here are this week’s most popular themes & templates from <span class="txt-blue">ThemeForest</span>! Grab ‘em while they’re hot!
         </div>
-        <div class="item-lists" id="main-list">
+        <div class="item-lists" id="mainList">
 
             <!-- <popular-item class="item-wrapper" 
                           *ngFor="let popItem of popularItems" 
                           [popularItem]="popItem" 
                           (removeClick)="removeItem($event)"></popular-item> -->
-            <div class="item-wrapper">
+            <!-- <div class="item-wrapper">
                 <div class="popular-item" [ngClass]="{'yellow-bg':this.popularItem.rating == '5.0', 'grey-bg':this.popularItem.rating != '5.0' }">
                     <div class="item-logo">
                       <img [src]="this.popularItem.thumbnail">
@@ -55,7 +55,7 @@
                         </span>
                     </div>
                   </div>
-            </div>
+            </div> -->
                          
         </div>
         
