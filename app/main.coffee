@@ -33,10 +33,20 @@ root.removeItem = (itemId) ->
   
 
 generateListItems = (innerContent, imgSrc, itemName, rating, itemId) ->
-  mainList.innerHTML += '<div class="item-wrapper"><div class="popular-item">
+  if rating == '5.0'
+    itemBgColor = 'yellow-bg'
+  else
+    itemBgColor = 'grey-bg'
+
+  if itemName.length > 50
+    displayItemName = itemName.substr(0,50) + "...";
+  else
+    displayItemName = itemName;
+
+  mainList.innerHTML += '<div class="item-wrapper"><div class="popular-item ' + itemBgColor + '\">
   <div class="item-logo"><img src=\"'+ imgSrc + '\"></div> 
   <div class="item-description">
-      <p class="name">'+ itemName + '</p>   
+      <p class="name">'+ displayItemName + '</p>   
       <p class="rating">'+ rating + '</p>
       <span class="remove-btn" onclick="removeItem(\''+itemId+'\')">
         Remove
@@ -53,9 +63,3 @@ root.fetchData = ->
     generateListItems mainList.innerHTML,itemData.thumbnail,itemData.item,itemData.rating,itemData.id for itemData in root.data
 
     
-
-    
-
-
-
-

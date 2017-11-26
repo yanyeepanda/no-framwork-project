@@ -41,7 +41,18 @@
   };
 
   generateListItems = function(innerContent, imgSrc, itemName, rating, itemId) {
-    return mainList.innerHTML += '<div class="item-wrapper"><div class="popular-item"> <div class="item-logo"><img src=\"' + imgSrc + '\"></div> <div class="item-description"> <p class="name">' + itemName + '</p> <p class="rating">' + rating + '</p> <span class="remove-btn" onclick="removeItem(\'' + itemId + '\')"> Remove </span> </div> </div></div>';
+    var displayItemName, itemBgColor;
+    if (rating === '5.0') {
+      itemBgColor = 'yellow-bg';
+    } else {
+      itemBgColor = 'grey-bg';
+    }
+    if (itemName.length > 50) {
+      displayItemName = itemName.substr(0, 50) + "...";
+    } else {
+      displayItemName = itemName;
+    }
+    return mainList.innerHTML += '<div class="item-wrapper"><div class="popular-item ' + itemBgColor + '\"> <div class="item-logo"><img src=\"' + imgSrc + '\"></div> <div class="item-description"> <p class="name">' + displayItemName + '</p> <p class="rating">' + rating + '</p> <span class="remove-btn" onclick="removeItem(\'' + itemId + '\')"> Remove </span> </div> </div></div>';
   };
 
   root.fetchData = function() {
