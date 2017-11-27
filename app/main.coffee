@@ -1,7 +1,9 @@
 root = exports ? this
 
 mainList = document.getElementById('mainList')
-httpGet = `function(aUrl, aCallback) {
+
+httpGet = 
+  `function(aUrl, aCallback) {
         var anHttpRequest = new XMLHttpRequest();
         anHttpRequest.onreadystatechange = function() { 
             if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
@@ -14,20 +16,23 @@ httpGet = `function(aUrl, aCallback) {
 
 url="http://marketplace.envato.com/api/edge/popular:themeforest.json"
 
-root.removeItem = (itemId) ->
-  console.log itemId,root.data
-  
-  `var index;
-   for (var n in root.data){
-      if (root.data[n].id == itemId){
-        index = n;
+removeItemForList = 
+  ` function(list, itemId){
+    for (var n in list){
+      if (list[n].id == itemId){
+        var index = n;
       }
     };
 
-   root.data.splice(index, 1);    
+    list.splice(index, 1);
+  }  
   `
+
+root.removeItem = (list, itemId) ->  
+  removeItemForList list, itemId; 
+  
   mainList.innerHTML = ''
-  generateListItems mainList.innerHTML,itemData.thumbnail,itemData.item,itemData.rating,itemData.id for itemData in root.data
+  generateListItems mainList,itemData.thumbnail,itemData.item,itemData.rating,itemData.id for itemData in list
 
 
   
@@ -43,12 +48,12 @@ generateListItems = (innerContent, imgSrc, itemName, rating, itemId) ->
   else
     displayItemName = itemName;
 
-  mainList.innerHTML += '<div class="item-wrapper"><div class="popular-item ' + itemBgColor + '\">
+  innerContent.innerHTML += '<div class="item-wrapper"><div class="popular-item ' + itemBgColor + '\">
   <div class="item-logo"><img src=\"'+ imgSrc + '\"></div> 
   <div class="item-description">
       <p class="name">'+ displayItemName + '</p>   
       <p class="rating">'+ rating + '</p>
-      <span class="remove-btn" onclick="removeItem(\''+itemId+'\')">
+      <span class="remove-btn" onclick="removeItem(data,\''+itemId+'\')">
         Remove
       </span>
   </div>
@@ -59,7 +64,6 @@ root.fetchData = ->
   mainList.innerHTML = '';
   httpGet url, (res) ->
     root.data = JSON.parse(res).popular.items_last_week
-    console.log root.data
-    generateListItems mainList.innerHTML,itemData.thumbnail,itemData.item,itemData.rating,itemData.id for itemData in root.data
+    generateListItems mainList,itemData.thumbnail,itemData.item,itemData.rating,itemData.id for itemData in root.data
 
     

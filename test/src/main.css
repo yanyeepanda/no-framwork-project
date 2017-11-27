@@ -1,0 +1,104 @@
+body {
+  margin: 0px;
+  font-family: Arial, Helvetica, sans-serif; }
+
+.container {
+  max-width: 1400px;
+  margin: auto; }
+
+.txt-blue {
+  color: #0565ae; }
+
+.top-bar {
+  background-color: #232323;
+  width: 100%;
+  line-height: 48px; }
+  .top-bar .logo {
+    margin-top: 10px;
+    margin-left: 20px;
+    float: left; }
+  .top-bar .welcome {
+    color: white;
+    margin-left: 20px; }
+
+.title {
+  background-color: #f6f9f3;
+  width: 100%;
+  height: 112px;
+  line-height: 112px; }
+  .title h1 {
+    color: #537b20;
+    margin: 0 0 0 20px; }
+
+.content {
+  width: 100%; }
+  .content .grab-them {
+    padding-top: 60px;
+    padding-bottom: 50px;
+    margin: auto;
+    text-align: center; }
+  .content .item-lists {
+    margin: auto; }
+    .content .item-lists .item-wrapper {
+      width: 440px;
+      float: left; }
+
+@media screen and (max-width: 960px) {
+  .grab-them {
+    width: 90%; }
+  .item-lists {
+    width: 440px; } }
+
+@media screen and (min-width: 960px) {
+  .grab-them {
+    width: 40%; }
+  .item-lists {
+    width: 880px; } }
+
+@media screen and (min-width: 768px) {
+  .welcome {
+    float: right; }
+  .top-bar {
+    height: 48px; } }
+
+@media screen and (max-width: 768px) {
+  .welcome {
+    float: left; }
+  .logo {
+    clear: both; }
+  .top-bar {
+    height: 96px; } }
+
+.popular-item {
+  border-radius: 2px;
+  max-width: 420px;
+  margin: 20px;
+  padding: 16px;
+  position: relative; }
+  .popular-item p {
+    margin-bottom: 6px;
+    margin-top: 0;
+    font-weight: bold;
+    width: 264px; }
+  .popular-item .name {
+    font-size: 1.05rem;
+    color: #0565ae; }
+  .popular-item .rating {
+    color: grey;
+    font-size: 0.9rem; }
+  .popular-item.yellow-bg {
+    background-color: #f6f2ca; }
+  .popular-item.grey-bg {
+    background-color: #e7e7e7; }
+  .popular-item .item-logo img {
+    width: 80px;
+    height: 80px; }
+  .popular-item .item-description {
+    position: absolute;
+    top: 20px;
+    left: 120px; }
+    .popular-item .item-description .remove-btn {
+      cursor: pointer;
+      color: red;
+      font-weight: 700;
+      font-size: 0.9rem; }

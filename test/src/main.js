@@ -1,5 +1,5 @@
 (function() {
-  var generateListItems, httpGet, mainList, root, url;
+  var generateListItems, httpGet, mainList, removeItemForList, root, url;
 
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
 
@@ -18,29 +18,29 @@
 
   url = "http://marketplace.envato.com/api/edge/popular:themeforest.json";
 
-  root.removeItem = function(itemId) {
-    var i, itemData, len, ref, results;
-    console.log(itemId, root.data);
-    var index;
-   for (var n in root.data){
-      if (root.data[n].id == itemId){
-        index = n;
+  root.removeItemForList =  function(list, itemId){
+    for (var n in list){
+      if (list[n].id == itemId){
+        var index = n;
       }
     };
 
-   root.data.splice(index, 1);    
-  ;
+    list.splice(index, 1);
+  };
+
+  root.removeItem = function(list, itemId) {
+    var i, itemData, len, results;
+    removeItemForList(list, itemId);
     mainList.innerHTML = '';
-    ref = root.data;
     results = [];
-    for (i = 0, len = ref.length; i < len; i++) {
-      itemData = ref[i];
-      results.push(generateListItems(mainList.innerHTML, itemData.thumbnail, itemData.item, itemData.rating, itemData.id));
+    for (i = 0, len = list.length; i < len; i++) {
+      itemData = list[i];
+      results.push(generateListItems(mainList, itemData.thumbnail, itemData.item, itemData.rating, itemData.id));
     }
     return results;
   };
 
-  generateListItems = function(innerContent, imgSrc, itemName, rating, itemId) {
+  root.generateListItems = function(innerContent, imgSrc, itemName, rating, itemId) {
     var displayItemName, itemBgColor;
     if (rating === '5.0') {
       itemBgColor = 'yellow-bg';
@@ -52,7 +52,7 @@
     } else {
       displayItemName = itemName;
     }
-    return mainList.innerHTML += '<div class="item-wrapper"><div class="popular-item ' + itemBgColor + '\"> <div class="item-logo"><img src=\"' + imgSrc + '\"></div> <div class="item-description"> <p class="name">' + displayItemName + '</p> <p class="rating">' + rating + '</p> <span class="remove-btn" onclick="removeItem(\'' + itemId + '\')"> Remove </span> </div> </div></div>';
+    return innerContent.innerHTML += '<div class="item-wrapper"><div class="popular-item ' + itemBgColor + '\"> <div class="item-logo"><img src=\"' + imgSrc + '\"></div> <div class="item-description"> <p class="name">' + displayItemName + '</p> <p class="rating">' + rating + '</p> <span class="remove-btn" onclick="removeItem(data,\'' + itemId + '\')"> Remove </span> </div> </div></div>';
   };
 
   root.fetchData = function() {
@@ -60,12 +60,11 @@
     return httpGet(url, function(res) {
       var i, itemData, len, ref, results;
       root.data = JSON.parse(res).popular.items_last_week;
-      console.log(root.data);
       ref = root.data;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         itemData = ref[i];
-        results.push(generateListItems(mainList.innerHTML, itemData.thumbnail, itemData.item, itemData.rating, itemData.id));
+        results.push(generateListItems(mainList, itemData.thumbnail, itemData.item, itemData.rating, itemData.id));
       }
       return results;
     });
