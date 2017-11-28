@@ -1,7 +1,6 @@
 describe("Main Js", function() {
 
     var UiFramework = (function() {
-    
         function div(id, cssClass) {
           var element = document.createElement("div");
           element.id = id;
@@ -49,39 +48,55 @@ describe("Main Js", function() {
         }];
 
     beforeAll(function() {
-            // document.body.innerHTML += 
-            // '<div onload=onload="fetchData()"><div class="top-bar"><div class="container"><img class="logo" src="../_assets/logo.png"> <div class="welcome"> <span>Welcome back, <strong>joeblogs54!</strong> </span> </div> </div> </div> <div class="title"> <div class="container"> <h1> Popular Items </h1> </div> </div> <div class="content"> <div class="container"> <div class="grab-them"> Here are this week’s most popular themes & templates from <span class="txt-blue">ThemeForest</span>! Grab ‘em while they’re hot! </div> <div class="item-lists" id="mainList"></div> </div> </div></div>';
-            // var mainList = document.getElementById('mainList');
-            // console.log(mainList);
-
         var body = document.getElementsByTagName("body")[0];
-        // var titleDiv = UiFramework.div("", "title");
-        // body.appendChild(titleDiv);
+
+        var titleDiv = UiFramework.div("", "title");
+        body.appendChild(titleDiv);
+        titleDiv.innerHTML = '<div class="container"><h1>Popular Items</h1></div>'
 
         var listDiv = UiFramework.div("mainList", "item-lists");
         body.appendChild(listDiv);
-        console.log(body);
      });
     
-   
-    it('adds two numbers together', function () {
-        expect(1 + 2).toEqual(3);
+     it('title div has a right height', function () {
+        
+        expect(document.getElementsByClassName("title")[0].offsetHeight).toEqual(112);
     });
-
 
     it('generate list item in a div', function () {
         var testList = document.getElementById('mainList');
         generateListItems(testList, mockList[0].thumbnail, mockList[0].item, mockList[0].rating, mockList[0].id);
-        var expectResult = '<div class="item-wrapper"><div class="popular-item yellow-bg"> <div class="item-logo"><img src=\"https://s3.envato.com/files/237422065/Thumbnail_Sale.jpg\"></div> <div class="item-description"> <p class="name">Avada | Responsive Multi-Purpose Theme</p> <p class="rating">5.0</p> <span class="remove-btn" onclick="removeItem(data,\'2833226\')"> Remove </span> </div> </div></div>'
-        
-        expect(testList.innerHTML).toEqual(expectResult);
-        
-    })
+        expect(testList.tagName).toEqual('DIV');  
+    });
 
-    it('removeItem function should remove a item from list according to its id', function () {
-        // var testList = document.getElementById('mainList');
+    it('div of list item has a correct size', function () {
+        var testList = document.getElementById('mainList');
+        testList.innerHTML = ''
+        generateListItems(testList, mockList[0].thumbnail, mockList[0].item, mockList[0].rating, mockList[0].id);
+        expect(document.getElementsByClassName("popular-item")[0].clientHeight).toEqual(115);
+        expect(document.getElementsByClassName("popular-item")[0].clientWidth).toEqual(400);  
+    });
+
+    it('div of list item has correct classes', function () {
+        var testList = document.getElementById('mainList');
+        testList.innerHTML = ''
+        generateListItems(testList, mockList[0].thumbnail, mockList[0].item, mockList[0].rating, mockList[0].id);
+        expect(document.getElementsByClassName("popular-item")[0].className).toEqual('popular-item yellow-bg');
+
+        generateListItems(testList, mockList[1].thumbnail, mockList[1].item, mockList[1].rating, mockList[1].id);
+        expect(document.getElementsByClassName("popular-item")[1].className).toEqual('popular-item grey-bg');
+    });
+
+    it('div of list item has correct contents', function () {
+        var testList = document.getElementById('mainList');
+        testList.innerHTML = ''
+        generateListItems(testList, mockList[1].thumbnail, mockList[1].item, mockList[1].rating, mockList[1].id);
+        expect(document.getElementsByClassName("popular-item")[0].lastElementChild.children[0].innerHTML).toEqual('Jupiter - Multi-Purpose Responsive Theme'); 
+        expect(document.getElementsByClassName("popular-item")[0].lastElementChild.children[1].innerHTML).toEqual('4.5');  
         
-            
+    });
+
+    it('removeItem function should remove a item from list according to its id', function () {            
         removeItemForList(mockList, "2833226");
         
         expect(mockList.length).toEqual(1);
